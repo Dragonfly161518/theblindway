@@ -8,6 +8,9 @@ WORKDIR $APP_HOME
 COPY . ./
 
 # Install production dependencies.
+RUN apt-get update && \
+  apt-get install -y build-essential libzbar-dev && \
+  pip install zbar
 RUN python -m pip install --upgrade pip
 RUN pip3 install requests Flask gunicorn numpy firebase-admin pyzbar
 
