@@ -47,7 +47,7 @@ def hello_world():
 def test():
     data = request.json
     frame = np.array(data['frame'])
-    ref.child('np').set({"code": "frame.tolist()"})
+    ref.child('np').set({"code": frame.tolist()})
     barcodes = pyzbar.decode(frame)
     Distancepx = 103  # px unit
     Distancecm = 60  # cm unit
