@@ -2,6 +2,9 @@ import os
 
 from flask import Flask
 from flask import request
+from firebase import firebase
+import datetime
+
 
 app = Flask(__name__)
 
@@ -14,8 +17,18 @@ def hello_world():
 
 @app.route('/login', methods=['POST'])
 def login():
-    if request.method == 'POST':
-        return 'Allright~'
+
+    firebase = firebase.FirebaseApplication(
+        "https://theblindway-b62dc.firebaseio.com/", None
+    )
+
+    firebase.post(
+        "/g01",
+        {
+            "Debug": datetime.datetime.now()
+        },
+    )
+    return "OK"
 
 
 if __name__ == "__main__":
