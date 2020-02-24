@@ -10,7 +10,7 @@ COPY . ./
 # Install production dependencies.
 RUN apt-get install libzbar0
 RUN python -m pip install --upgrade pip
-RUN pip3 install requests Flask gunicorn numpy firebase-admin pyzbar 
+RUN pip3 install requests Flask gunicorn numpy firebase-admin zbar pyzbar 
 
 # Run the web service on container startup. Here we use the gunicorn
 # webserver, with one worker process and 8 threads.
