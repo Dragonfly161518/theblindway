@@ -15,9 +15,7 @@ firebase_admin.initialize_app(cred, {
     'databaseURL': "https://theblindway-b62dc.firebaseio.com"
 })
 
-# As an admin, the app has access to read and write all data, regradless of Security Rules
 ref = db.reference('fuck')
-print(ref.get())
 
 config = {
     "apiKey": "AIzaSyCoLhhc45GCqQZWFGtUCf5G_1QAmUTI_QI",
@@ -45,7 +43,17 @@ def hello_world():
 
 @app.route('/test', methods=['POST'])
 def test():
-    db.child("fuck").push({"name": datetime.datetime().now()})
+    users_ref = ref.child('test')
+    users_ref.set({
+        'alanisawesome': {
+            'date_of_birth': 'June 23, 1912',
+            'full_name': 'Alan Turing'
+        },
+        'gracehop': {
+            'date_of_birth': 'December 9, 1906',
+            'full_name': 'Grace Hopper'
+        }
+    })
     data = request.json
     params = data['params']
     arr = np.array(data['arr'])
