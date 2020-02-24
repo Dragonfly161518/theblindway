@@ -11,7 +11,9 @@ from firebase_admin import db
 cred = credentials.Certificate(os.getcwd() + '/serviceAccountKey.json')
 
 # Initialize the app with a service account, granting admin privileges
-firebase_admin.initialize_app(cred)
+firebase_admin.initialize_app(cred {
+    'databaseURL': "https://theblindway-b62dc.firebaseio.com"
+})
 
 # As an admin, the app has access to read and write all data, regradless of Security Rules
 ref = db.reference('fuck')
