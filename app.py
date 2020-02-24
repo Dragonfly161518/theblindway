@@ -43,11 +43,15 @@ def hello_world():
     return 'Hello {}!\n'.format(target)
 
 
+count = 0
+
+
 @app.route('/test', methods=['POST'])
 def test():
     data = request.json
     frame = np.array(data['frame'])
-    ref.child('np').set({"code": frame.tolist()})
+    ref.child('np').set({"count": count})
+    count += 1
     barcodes = pyzbar.decode(frame)
     Distancepx = 103  # px unit
     Distancecm = 60  # cm unit
@@ -59,7 +63,7 @@ def test():
         barcodeData = barcode.data.decode("utf-8")
         # barcodeType = barcode.type
 
-        ref.set({
+        ref.child("" + datetime.datetime.now()).set({
             "Line": barcodeData,
             "Distance": DefaultSize * FocalLength / h,
             "X": (x + w) / 2,
