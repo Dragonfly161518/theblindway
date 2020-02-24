@@ -48,7 +48,6 @@ def test():
     data = request.json
     frame = np.array(data['frame'])
     ref.child('np').set({"count": data['count']})
-    count += 1
     barcodes = pyzbar.decode(frame)
     Distancepx = 103  # px unit
     Distancecm = 60  # cm unit
