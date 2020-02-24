@@ -6,6 +6,7 @@ import numpy as np
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
+from pyzbar import pyzbar
 
 # Fetch the service account key JSON file contents
 cred = credentials.Certificate(os.getcwd() + '/serviceAccountKey.json')
@@ -38,26 +39,41 @@ app = Flask(__name__)
 @app.route('/')
 def hello_world():
     target = os.environ.get('TARGET', 'World')
+    print("TESTTTTTTTTTTTTTTTTTTTTTTTT")
     return 'Hello {}!\n'.format(target)
 
 
 @app.route('/test', methods=['POST'])
 def test():
-    users_ref = ref.child('test')
-    users_ref.set({
-        'alanisawesome': {
-            'date_of_birth': 'June 23, 1912',
-            'full_name': 'Alan Turing'
-        },
-        'gracehop': {
-            'date_of_birth': 'December 9, 1906',
-            'full_name': 'Grace Hopper'
-        }
-    })
     data = request.json
-    params = data['params']
-    arr = np.array(data['arr'])
-    print(params, arr.shape)
+    frame = np.array(data['frame'])
+    barcodes = pyzbar.decode(frame)
+    Distancepx = 103  # px unit
+    Distancecm = 60  # cm unit
+    DefaultSize = 15  # cm unit
+    FocalLength = Distancepx * Distancecm / DefaultSize
+    for barcode in barcodes:
+        (x, y, w, h) = barcode.rect
+        # cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
+        barcodeData = barcode.data.decode("utf-8")
+        # barcodeType = barcode.type
+        print(
+            {
+                "Encode": barcodeData,
+                "Distance": DefaultSize * FocalLength / h,
+                "X": (x + w) / 2,
+                "Y": (y + h) / 2,
+                "TimeStamp": datetime.datetime.now(),
+            }
+        )
+        ref.set({
+            "Line": barcodeData,
+            "Distance": DefaultSize * FocalLength / h,
+            "X": (x + w) / 2,
+            "Y": (y + h) / 2,
+            "TimeStamp": datetime.datetime.now(),
+        })
+
     return "Success"
 
 
