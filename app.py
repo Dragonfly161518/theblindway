@@ -64,7 +64,7 @@ def test():
             "Distance": DefaultSize * FocalLength / h,
             "X": (x + w) / 2,
             "Y": (y + h) / 2,
-            "TimeStamp": datetime.datetime.now(),
+            "TimeStamp": str(datetime.datetime.now()),
         })
 
     return "Success"
