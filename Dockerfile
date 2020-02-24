@@ -8,9 +8,10 @@ WORKDIR $APP_HOME
 COPY . ./
 
 # Install production dependencies.
-# RUN apt-get install libzbar-dev
+RUN apt-get update && \
+  apt-get install -y libzbar-dev
 RUN python -m pip install --upgrade pip
-RUN pip3 install requests Flask gunicorn numpy firebase-admin zbar pyzbar 
+RUN pip3 install requests Flask gunicorn numpy firebase-admin pyzbar
 
 # Run the web service on container startup. Here we use the gunicorn
 # webserver, with one worker process and 8 threads.
