@@ -59,7 +59,7 @@ def test():
         barcodeData = barcode.data.decode("utf-8")
         # barcodeType = barcode.type
 
-        ref.child("" + datetime.datetime.now()).set({
+        ref.push({
             "Line": barcodeData,
             "Distance": DefaultSize * FocalLength / h,
             "X": (x + w) / 2,
