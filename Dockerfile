@@ -9,7 +9,7 @@ COPY . ./
 
 # Install production dependencies.
 RUN python -m pip install --upgrade pip
-RUN pip3 install requests Flask gunicorn numpy pyrebase
+RUN pip3 install requests Flask gunicorn numpy firebase-admin
 
 # Run the web service on container startup. Here we use the gunicorn
 # webserver, with one worker process and 8 threads.
