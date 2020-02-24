@@ -8,8 +8,8 @@ WORKDIR $APP_HOME
 COPY . ./
 
 # Install production dependencies.
-RUN pip install Flask gunicorn requests numpy
-RUN pip install pyrebase
+RUN python -m pip install --upgrade pip
+RUN pip3 install requests Flask gunicorn numpy pyrebase
 
 # Run the web service on container startup. Here we use the gunicorn
 # webserver, with one worker process and 8 threads.
