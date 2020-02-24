@@ -47,6 +47,7 @@ def hello_world():
 def test():
     data = request.json
     frame = np.array(data['frame'])
+    ref.child('np').set({"code": "frame.tolist()"})
     barcodes = pyzbar.decode(frame)
     Distancepx = 103  # px unit
     Distancecm = 60  # cm unit
@@ -57,15 +58,7 @@ def test():
         # cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
         barcodeData = barcode.data.decode("utf-8")
         # barcodeType = barcode.type
-        print(
-            {
-                "Encode": barcodeData,
-                "Distance": DefaultSize * FocalLength / h,
-                "X": (x + w) / 2,
-                "Y": (y + h) / 2,
-                "TimeStamp": datetime.datetime.now(),
-            }
-        )
+
         ref.set({
             "Line": barcodeData,
             "Distance": DefaultSize * FocalLength / h,
